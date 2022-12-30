@@ -46,7 +46,7 @@ void manage_persons(FILE *fp, LIST_PERSONS* list_persons){
 // Processa um novo registo de pessoa
 void insert_person(FILE *fp, LIST_PERSONS *list_persons) {
 
-  // TODO
+  // TODO /PS/ Processa um novo registo de pessoa
 }
 
 // Processa um novo registo de pessoa
@@ -61,7 +61,7 @@ void update_person(FILE *fp, LIST_PERSONS *list_persons) {
     return;
   }
 
-  // TODO
+  // TODO // Processa um novo registo de pessoa
 }
 
 void remove_person(FILE *fp, LIST_PERSONS *list_persons) {
@@ -78,6 +78,7 @@ int save_person(FILE *fp, LIST_PERSONS *list_persons, PERSON *p, char operation)
   int index = list_persons_getIndex(list_persons, p->id);
 
   // TODO
+  // TERMINADO
 
   return 1;
 }

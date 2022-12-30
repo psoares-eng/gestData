@@ -63,9 +63,27 @@ int main() {
   {
     switch(opcao)
     {
+/*
+OP_PERSONS   'a'
+OP_COUNTRIES 'b'
+OP_IMPORT    'i'
+OP_DUMP      'd'
+OP_ZAP       'z'
+OP_RESET     'r'
+OP_EXIT      'x'
+*/
       case OP_PERSONS:    manage_persons(fp_data, &list_persons); break;
       case OP_COUNTRIES:  manage_countries(); break;
-      // TODO
+
+      // TODO // MENU (1 NIVEL)
+      // VALIDAR
+      // TERMINADO
+
+      /*
+      case OP_IMPORT:    manage_persons(fp_data, &list_persons); break;
+      case OP_DUMP:  manage_countries(); break;
+      case OP_ZAP:    manage_persons(fp_data, &list_persons); break;
+      case OP_RESET:  manage_countries(); break;*/
 
       case OP_EXIT:       wait("Opcao SAIR"); break;
     }
