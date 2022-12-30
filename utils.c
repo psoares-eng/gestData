@@ -55,33 +55,33 @@ int read_integer(const char*prompt, int min, int max){
 
 // Le uma string com dimensao minima
 char* read_string(const char*prompt, char*s, int min_len){
-  // TODO
+  // TODO // Le uma string com dimensao minima
 return NULL;
 }
 
 // Verifica se um ano é bissexto
 int isLeapYear(int year) {
-  // TODO
+  // TODO // Verifica se um ano é bissexto
   // https://www.mathsisfun.com/leap-years.html
 	return 1;
 }
 
 // Verifica se uma data é valida
 int isDate(DATE date) {
-  // TODO
+  // TODO // Verifica se uma data é valida
   return 1;
 }
 
 // Adiciona um dia 'a data enviada por parametro
 void date_addOneDay(DATE *date)
 {
-  // TODO
+  // TODO // Adiciona um dia 'a data enviada por parametro
 }
 
 // Adiciona n_dias 'a data enviada por parametro
 void date_add(DATE *date, int n_days)
 {
-  // TODO
+  // TODO // Adiciona n_dias 'a data enviada por parametro
 }
 
 
@@ -89,7 +89,7 @@ void date_add(DATE *date, int n_days)
 // erro e volta a pedir, até que uma data valida seja introduzida.
 DATE read_date(const char* prompt) {
   DATE date;
-  // TODO
+  // TODO // Le e retorna uma data no formato yyyy-mm-dd
 
   return date;
 }

@@ -14,15 +14,17 @@ void read_person(PERSON *p, char operation) {
    if (operation==OP_INSERT) // nunca se altera um id
      p->id = read_integer("Id         : ", 100, 999);
 
-   // TODO
+   // TODO // Ler o registo de uma pessoa a partir do ecra
 
    p->is_active = 1;  // Por defeito o registo fica ativo (true)
 }
 
+// Exibe Vertical pessoa o registo de uma pessoa a partir do ecra
 void show_person_vertical(PERSON *p){
-
+    // TODO // Exibe Vertical pessoa o registo de uma pessoa a partir do ecra
 }
 
+// Exibe Horizontal pessoa o registo de uma pessoa a partir do ecra
 void show_person_horizontal(PERSON *p){
-
+    // TODO // Exibe Horizontal pessoa o registo de uma pessoa a partir do ecra
 }

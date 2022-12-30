@@ -43,13 +43,13 @@ void manage_persons(FILE *fp, LIST_PERSONS* list_persons){
 
 }
 
-// Processa um novo registo de pessoa
+// INSERIR Processa um novo registo de pessoa
 void insert_person(FILE *fp, LIST_PERSONS *list_persons) {
 
-  // TODO /PS/ Processa um novo registo de pessoa
+  // TODO /PS/ INSERIR Processa um novo registo de pessoa
 }
 
-// Processa um novo registo de pessoa
+// UPDATE Processa um novo registo de pessoa
 void update_person(FILE *fp, LIST_PERSONS *list_persons) {
 
   int id = read_integer("Indique o Id a alterar: ", 100, 999);
@@ -61,11 +61,12 @@ void update_person(FILE *fp, LIST_PERSONS *list_persons) {
     return;
   }
 
-  // TODO // Processa um novo registo de pessoa
+  // TODO // UPDATE Processa um novo registo de pessoa
 }
 
+// REMOVE Processa um novo registo de pessoa
 void remove_person(FILE *fp, LIST_PERSONS *list_persons) {
-  // TODO
+  // TODO // REMOVE Processa um novo registo de pessoa
 }
 
 //
@@ -77,8 +78,7 @@ int save_person(FILE *fp, LIST_PERSONS *list_persons, PERSON *p, char operation)
   // Ver se a pessoa ji existe e obter o indice da sua posicao
   int index = list_persons_getIndex(list_persons, p->id);
 
-  // TODO
-  // TERMINADO
+  // TODO // Grava um registo de pessoa no ficheiro.
 
   return 1;
 }

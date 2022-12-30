@@ -13,7 +13,7 @@ int list_persons_isFull(LIST_PERSONS *list) {
 
 // Verifica se a lista de pessoas esta vazia
 int list_persons_isEmpty(LIST_PERSONS *list) {
-  // TODO
+  // TODO // Verifica se a lista de pessoas esta vazia
   return 1;
 }
 
@@ -21,14 +21,15 @@ int list_persons_isEmpty(LIST_PERSONS *list) {
 // Caso contrario mostra um erro.
 void list_persons_add(LIST_PERSONS *list, PERSON *record) {
 
-  // TODO
+  // TODO // Adiciona uma nova pessoa a lista, caso ainda exista espaco disponivel.
 
 }
 
-// Devolve a posicao onde se encontra o id no array de pessoas ou REC_NOT_FOUND, caso nao exista.
+// Devolve a posicao onde se encontra o id
+// no array de pessoas ou REC_NOT_FOUND, caso nao exista.
 int list_persons_getIndex(LIST_PERSONS *list, int id) {
 
-  // TODO
+  // TODO // Devolve a posicao onde se encontra o id
 
   return REC_NOT_FOUND;
 }
@@ -37,6 +38,6 @@ int list_persons_getIndex(LIST_PERSONS *list, int id) {
 // posicionado algures
 void list_persons_loadFromFile(FILE *fp, LIST_PERSONS *list) {
 
-  // TODO
+  // TODO // Carrega a lista de pessoas a partir do ficheiro
 
 }

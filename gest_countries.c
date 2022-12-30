@@ -75,9 +75,9 @@ void manage_countries(){
   }
 
 
-  puts("\n\nLimpar a lista de registos em memoria."); 
+  puts("\n\nLimpar a lista de registos em memoria.");
   list_countries.count=0; // Lista vazia.
- 
+
  wait("Ler a lista de registos a partir do ficheiro binario. Prima <ENTER>...");
 
   if ((fp_country = open_data_file(DIR_DATA, DATA_FILE_COUNTRY))==NULL)      // Abrir o ficheiro de dados
@@ -159,7 +159,7 @@ int compare(const void*ptr1, const void* ptr2){
   // comparar code2
   int res = strcmp(p1->code2, p2->code2);
   if (res!=0) return res;
-  
+
 
   // comparar code3
   res = strcmp(p1->code3, p2->code3);

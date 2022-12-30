@@ -11,13 +11,14 @@
 #define MAX_DEP_SIZE            50
 
 
+// define STRUCT PERSON
 typedef struct
 {
    int  id;
    char full_name[MAX_NAME_SIZE+1];
    char address[MAX_ADDRESS_SIZE+1];
 
-  // TODO
+  // TODO // define STRUCT PERSON
 
    int is_active;
 } PERSON;
