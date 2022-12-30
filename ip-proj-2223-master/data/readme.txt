@@ -1,1 +1,0 @@
-Pasta onde irão existir os ficheiros de dados.
