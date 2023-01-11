@@ -60,10 +60,21 @@ return NULL;
 }
 
 // Verifica se um ano é bissexto
-int isLeapYear(int year) {
-  // TODO // Verifica se um ano é bissexto
+int isLeapYear(int year)
+{
+        if(year%4==0)
+        if(year%100!=0)
+            return 1;
+        else
+            if(year%400==0)
+                return 1;
+            else
+                return 0;
+    else
+        return 0;
+  // TODO // Verifica se um ano é bissexto // DA // VALIDAR
+  // DA // VALIDAR
   // https://www.mathsisfun.com/leap-years.html
-	return 1;
 }
 
 // Verifica se uma data é valida
