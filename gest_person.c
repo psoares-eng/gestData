@@ -63,10 +63,10 @@ void tokenize(char* string, char *delimiter, char *arr[], int* count) {
 
 // Read one contry in file.
 // Return boolean
-int read_person_from_txt_file(FILE*fp, PERSON *person) {
+int read_person_from_txt_file(FILE *fp, PERSON *person) {
   //int n_fields = fscanf(fp, "%s %s %[^\n]s", person->f1, person->f2, person->f3);
 
-    int id;
+    /*int id;
     char first_name[MAX_NAME_SIZE+1];
     char last_name[MAX_NAME_SIZE+1];
     //char full_name[MAX_NAME_SIZE+1];
@@ -78,10 +78,9 @@ int read_person_from_txt_file(FILE*fp, PERSON *person) {
     char country_code[MAX_COUNTRY_CODE_SIZE+1];
     char dep[MAX_DEP_SIZE+1];
 
-    int is_active;
+    int is_active;*/
 
     char string[500];
-    //int n_fields = fscanf(fp, "%s", string);
     int n_fields = fgets(string, 500, fp);
 
     char *arr[100] = { NULL };
@@ -94,14 +93,23 @@ int read_person_from_txt_file(FILE*fp, PERSON *person) {
         }
     }
 
-  //int n_fields = fscanf(fp, "%[^\n]s", person->id);//
+    //printf( "id: %s\n", arr[0] );
+    //printf( "id: %s\n", arr[1] );
+    //strcpy(first_name, arr[0]);
+    //person->id = (int) arr[0];
+    strcpy(person->first_name, arr[1]);
+    printf( "first_name: %s\n", arr[1] );
+    printf( "first_name: %s\n", person->first_name );
+
+    //printf( "%d\n", count );
+
   //426	Constantin	Gowdridge	2, Old Gate Point	cgowdridge0@chicagotribune.com	1994-02-02	Male	28400	CN	Finance	1
-  /*int n_fields = fscanf(fp, "%d %s %s %s %s %s %s %s %s %[^\n]d", id, first_name, last_name, address, email, gender, country_code, dep, is_active);
+  /*int n_fields = fscanf(fp, "%d\t%s\t%s\t%s", &id, first_name, last_name, address);
 
   char info[MAX_STRING];
-  sprintf(info, "| %s | %s | %s | %s | %s | %s | Prima <ENTER>...\n", aux1, aux2, aux3, aux4, aux5, aux6);
+  sprintf(info, "| %d | %s | %s | %s | Prima <ENTER>...\n", id, first_name, last_name, address);
   wait(info);*/
-  return 0;//(n_fields == 3); // Sucesso se foram lidos 3 campos
+  return (count == 11);//(n_fields == 3); // Sucesso se foram lidos 3 campos
 }
 
 // IMPORTAR
@@ -109,15 +117,14 @@ int read_person_from_txt_file(FILE*fp, PERSON *person) {
 void import_persons() {
   LIST_PERSONS list_persons;
   list_persons.count = 0;   // Nao ha pessoas na lista
-  char aux[MAX_STRING];
 
   wait("Importar o ficheiro csv com as pessoas. Prima <ENTER>...\n");
   // Importar os dados do ficheiro para a lista de countries
   FILE *fp;         // Ficheiro para importar os dados.
+
+  char aux[MAX_STRING];
   //sprintf(aux, "%s/%s", "datasets", "all-persons.csv");
   sprintf(aux, "%s/%s", "datasets", "persons.csv");
-
-
 
   if ((fp=fopen(aux, "rt"))==NULL)
   {
@@ -125,12 +132,16 @@ void import_persons() {
     return;
   }
 
+  //while (read_person_from_txt_file(fp, &list_persons.person[list_persons.count])) // Enquanto conseguir ler um registo
   while (read_person_from_txt_file(fp, &list_persons.person[list_persons.count])) // Enquanto conseguir ler um registo
   {
     printf("Ler registo de ficheiro de texto #%d\n", ++list_persons.count);
+    //printf("Registo # %d\n", list_persons.person[list_persons.count].id);
+    printf("First Name: %s\n", list_persons.person[list_persons.count].first_name);
   }
   char info[MAX_STRING];
-  sprintf(info, "%d. Prima <ENTER>...\n", list_persons.count);
+  //sprintf(info, "%d | %d Prima <ENTER>...\n", list_persons.count, list_persons.person[0].id);
+  sprintf(info, "%d Prima <ENTER>...\n", list_persons.count);
   wait(info);
 
   fclose(fp);
