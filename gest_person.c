@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// VALIDAR
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+
 #include "includes/person.h"
 #include "includes/list_persons.h"
 #include "includes/gestdata.h"
 #include "includes/gest_person.h"
-
 
 static const char* menu_person[] = {
   "I - Inserir Pessoa",
@@ -24,8 +28,6 @@ static const char* menu_person[] = {
   NULL
 };
 
-
-
 // Ecra de gestao de pessoas
 void manage_persons(FILE *fp, LIST_PERSONS* list_persons){
   char opcao;
@@ -37,8 +39,10 @@ void manage_persons(FILE *fp, LIST_PERSONS* list_persons){
       case OP_UPDATE:      update_person(fp, list_persons); break;
       case OP_REMOVE:      remove_person(fp, list_persons); break;
 
-      //case OP_IMPORTP:     import_persons(fp, list_persons); break;
+      // VALIDAR // Menu importar dados pessoas csv
+      // Menus: a > m
       case OP_IMPORTP:     import_persons(list_persons); break;
+      //case OP_IMPORTP:     import_persons(fp, list_persons); break;
 
       case OP_LIST:        wait("Listagens (Pessoas)"); break;
 
@@ -47,105 +51,89 @@ void manage_persons(FILE *fp, LIST_PERSONS* list_persons){
 
 }
 
-// https://stackoverflow.com/questions/33704362/spilitting-a-string-into-array-of-strings?noredirect=1&lq=1
-// Divide uma string em várias por um separador
-// Recolhe sub-strings em array
-void tokenize(char* string, char *delimiter, char *arr[], int* count) {
-    char *token;
-    token = strtok (string, delimiter);
-    int i = 0;
-    while (token != NULL) {
-        arr[i++] = token;
-        token = strtok (NULL, delimiter);
-    }
-    *count = i;
-}
-
-// Read one contry in file.
+// VALIDAR // Read one person in file
 // Return boolean
+// REF read_country_from_txt_file()
 int read_person_from_txt_file(FILE *fp, PERSON *person) {
-  //int n_fields = fscanf(fp, "%s %s %[^\n]s", person->f1, person->f2, person->f3);
-
-    /*int id;
-    char first_name[MAX_NAME_SIZE+1];
-    char last_name[MAX_NAME_SIZE+1];
-    //char full_name[MAX_NAME_SIZE+1];
-    char address[MAX_ADDRESS_SIZE+1];
-    char email[MAX_EMAIL_SIZE+1];
-    //char birth_date[MAX_ADDRESS_SIZE+1];
-    char gender[MAX_GENDER_SIZE+1];
-    //char zip[MAX_ADDRESS_SIZE+1];
-    char country_code[MAX_COUNTRY_CODE_SIZE+1];
-    char dep[MAX_DEP_SIZE+1];
-
-    int is_active;*/
-
-    char string[500];
+    char string[500]; // VALIDAR valor
     int n_fields = fgets(string, 500, fp);
 
-    char *arr[100] = { NULL };
+    char *campo[100] = { NULL }; // VALIDAR valor
     int count = 0;
-    tokenize(string, "\t", arr, &count);
 
-    for ( int i = 0; i < count; i++ ) {
-        if ( arr[i] != NULL ) {
-            printf( "arr[%d] = %s\n", i, arr[i] );
-        }
-    }
+    tokenize(string, "\t", campo, &count);
 
-    //printf( "id: %s\n", arr[0] );
-    //printf( "id: %s\n", arr[1] );
-    //strcpy(first_name, arr[0]);
-    //person->id = (int) arr[0];
-    strcpy(person->first_name, arr[1]);
-    printf( "first_name: %s\n", arr[1] );
-    printf( "first_name: %s\n", person->first_name );
+    person->id = atoi(campo[0]);
+    strcpy( person->first_name, campo[1] );
+    strcpy( person->last_name, campo[2] );
+        // VALIDAR // junta o nome com o apelido
+        char full_name[MAX_FULLNAME_SIZE];
+        sprintf(full_name, "%s %s", campo[1], campo[2]);
+        strcpy(person->full_name, full_name);
+    strcpy(person->address, campo[3]);
+    strcpy(person->email, campo[4]);
+        // TODO /PS/ usar campo timedate >> ver #include <time.h>
+        //struct tm date;
+        //memset(&date, 0, sizeof(struct tm));
+        //strptime( campo[5], "%Y-%m-%d", &date );
+        strcpy( person->birth_date, campo[5] );
+    strcpy( person->gender, campo[6] );
+      strcpy( person->zip, campo[7] );
+    strcpy( person->country_code, campo[8] );
+    strcpy (person->dep, campo[9] );
+    person->is_active = atoi(campo[10]);
 
-    //printf( "%d\n", count );
-
-  //426	Constantin	Gowdridge	2, Old Gate Point	cgowdridge0@chicagotribune.com	1994-02-02	Male	28400	CN	Finance	1
-  /*int n_fields = fscanf(fp, "%d\t%s\t%s\t%s", &id, first_name, last_name, address);
-
-  char info[MAX_STRING];
-  sprintf(info, "| %d | %s | %s | %s | Prima <ENTER>...\n", id, first_name, last_name, address);
-  wait(info);*/
-  return (count == 11);//(n_fields == 3); // Sucesso se foram lidos 3 campos
+    return (count == 11);// Sucesso se foram lidos 11 campos
 }
 
-// IMPORTAR
-//void import_persons(FILE *fp, LIST_PERSONS *list_persons) {
-void import_persons() {
-  LIST_PERSONS list_persons;
-  list_persons.count = 0;   // Nao ha pessoas na lista
+// VALIDAR // IMPORTAR
+int import_persons() {
+    LIST_PERSONS list_persons;
+    list_persons.count = 0;   // Nao ha pessoas na lista
 
-  wait("Importar o ficheiro csv com as pessoas. Prima <ENTER>...\n");
-  // Importar os dados do ficheiro para a lista de countries
-  FILE *fp;         // Ficheiro para importar os dados.
+    // Importar os dados do ficheiro para a lista de countries
+    FILE *fp;         // Ficheiro para importar os dados.
 
-  char aux[MAX_STRING];
-  //sprintf(aux, "%s/%s", "datasets", "all-persons.csv");
-  sprintf(aux, "%s/%s", "datasets", "persons.csv");
+    char info[MAX_STRING];
+    char filepath[MAX_STRING];
+    //sprintf(filepath, "%s/%s", "datasets", "all-persons.csv");
+    // Remover cabecalhos do ficheiro e campos para simplificar a importacao
+    sprintf(filepath, "%s/%s", "datasets", "persons.csv");
+    sprintf(info, "\nImportar o ficheiro \"%s\" com as pessoas. Prima <ENTER>...\n", filepath);
+    wait(info);
 
-  if ((fp=fopen(aux, "rt"))==NULL)
-  {
-    wait("Problemas na abertura do ficheiro de pessoas.");
-    return;
-  }
+    if ((fp=fopen(filepath, "rt"))==NULL)
+    {
+        wait("Problemas na abertura do ficheiro de pessoas.");
+        return 1;
+    }
 
-  //while (read_person_from_txt_file(fp, &list_persons.person[list_persons.count])) // Enquanto conseguir ler um registo
-  while (read_person_from_txt_file(fp, &list_persons.person[list_persons.count])) // Enquanto conseguir ler um registo
-  {
-    printf("Ler registo de ficheiro de texto #%d\n", ++list_persons.count);
-    //printf("Registo # %d\n", list_persons.person[list_persons.count].id);
-    printf("First Name: %s\n", list_persons.person[list_persons.count].first_name);
-  }
-  char info[MAX_STRING];
-  //sprintf(info, "%d | %d Prima <ENTER>...\n", list_persons.count, list_persons.person[0].id);
-  sprintf(info, "%d Prima <ENTER>...\n", list_persons.count);
-  wait(info);
+    int pid = 0;
+    while (read_person_from_txt_file(fp, &list_persons.person[list_persons.count])) // Enquanto conseguir ler um registo
+    {
+        pid = list_persons.count;
+        printf("\nLer registo de ficheiro de texto #%d\n", pid);
+        printf("(%d)\n", list_persons.person[pid].id);
+        printf("        Name   : %s\n", list_persons.person[pid].first_name);
+        printf("        L  Name: %s\n", list_persons.person[pid].last_name);
+        printf("        F  Name: %s\n", list_persons.person[pid].full_name);
+        printf("        Address: %s\n", list_persons.person[pid].address);
+        printf("        Email  : %s\n", list_persons.person[pid].email);
+        printf("        Birth  : %s\n", list_persons.person[pid].birth_date);
+        printf("        Gender : %s\n", list_persons.person[pid].gender);
+        printf("        ZIP    : %s\n", list_persons.person[pid].zip);
+        printf("        Country: %s\n", list_persons.person[pid].country_code);
+        printf("        Depart.: %s\n", list_persons.person[pid].dep);
+        printf("        Active : %d\n", list_persons.person[pid].is_active);
+        ++list_persons.count;
+    }
 
-  fclose(fp);
+    // VALIDAR // REMOVER // PAUSAR PARA VERIFICACAO DOS DADOS APENAS
+    sprintf(info, "\nTotal de registos csv = %d. Prima <ENTER>...\n", pid);
+    wait(info);
 
+    fclose(fp);
+    return(0);
 }
 
 // INSERIR Processa um novo registo de pessoa

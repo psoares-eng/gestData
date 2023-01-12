@@ -9,7 +9,6 @@ typedef struct {
   int count;
 } LIST_PERSONS;
 
-
 void list_persons_inic(LIST_PERSONS *list);
 int list_persons_isFull(LIST_PERSONS *list);
 int list_persons_isEmpty(LIST_PERSONS *list);
