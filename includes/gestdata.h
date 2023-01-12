@@ -25,6 +25,8 @@
 #define OP_REMOVE   'r'
 #define OP_UNDELETE 'u'
 
+#define OP_IMPORTP   'm'
+
 #define OP_LIST     'l'
 #define OP_SORT     '1'
 #define OP_SEARCH_SEQ '2'

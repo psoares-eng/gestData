@@ -28,7 +28,7 @@ char get_menu_option(const char *menu[])
 
     // Ler a escolha do utilizador
     fflush(stdin);
-    printf("\n\t\t\t\tOpao: ");
+    printf("\n\t\t\t\tOpção: ");
     opcao = tolower(getchar());
   }
   while(!is_valid_option(opcao, menu));
