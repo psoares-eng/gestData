@@ -53,6 +53,7 @@ int main() {
   int opcao;
   FILE *fp_data;
   LIST_PERSONS list_persons;
+  list_persons.count = 0;   // Nao ha pessoas na lista
 
   setlocale(LC_ALL,"");
 

@@ -44,11 +44,11 @@ void manage_persons(FILE *fp, LIST_PERSONS* list_persons){
       case OP_IMPORTP:     import_persons(list_persons); break;
       //case OP_IMPORTP:     import_persons(fp, list_persons); break;
 
-      case OP_LIST:        wait("Listagens (Pessoas)"); break;
+      //case OP_LIST:        wait("Listagens (Pessoas)"); break;
+      case OP_LIST:        show_persons(list_persons); break;
 
       case OP_EXIT:        wait("Opcao SAIR"); break;
     }
-
 }
 
 // VALIDAR // Read one person in file
@@ -57,39 +57,42 @@ void manage_persons(FILE *fp, LIST_PERSONS* list_persons){
 int read_person_from_txt_file(FILE *fp, PERSON *person) {
     char string[500]; // VALIDAR valor
     int n_fields = fgets(string, 500, fp);
-
     char *campo[100] = { NULL }; // VALIDAR valor
     int count = 0;
 
-    tokenize(string, "\t", campo, &count);
+    if( n_fields!=0 ){ // VALIDAR // Verificar se n_fields não null
+        //printf("\nFIELDS #%d\n", (n_fields));
 
-    person->id = atoi(campo[0]);
-    strcpy( person->first_name, campo[1] );
-    strcpy( person->last_name, campo[2] );
-        // VALIDAR // junta o nome com o apelido
-        char full_name[MAX_FULLNAME_SIZE];
-        sprintf(full_name, "%s %s", campo[1], campo[2]);
-        strcpy(person->full_name, full_name);
-    strcpy(person->address, campo[3]);
-    strcpy(person->email, campo[4]);
-        // TODO /PS/ usar campo timedate >> ver #include <time.h>
-        //struct tm date;
-        //memset(&date, 0, sizeof(struct tm));
-        //strptime( campo[5], "%Y-%m-%d", &date );
-        strcpy( person->birth_date, campo[5] );
-    strcpy( person->gender, campo[6] );
-      strcpy( person->zip, campo[7] );
-    strcpy( person->country_code, campo[8] );
-    strcpy (person->dep, campo[9] );
-    person->is_active = atoi(campo[10]);
+        strreplace(string, "\t\t", "\tNULL\t"); // substitui NULL por "NULL"
+        tokenize(string, "\t", campo, &count);
 
+        person->id = atoi(campo[0]); // VALIDAR uso de atoi
+        strcpy( person->first_name, campo[1] );
+        strcpy( person->last_name, campo[2] );
+            // VALIDAR // junta o nome com o apelido
+            char full_name[MAX_FULLNAME_SIZE];
+            sprintf(full_name, "%s %s", campo[1], campo[2]);
+            strcpy(person->full_name, full_name);
+        strcpy(person->address, campo[3]);
+        strcpy(person->email, campo[4]);
+            // TODO /PS/ usar campo timedate >> ver #include <time.h>
+            //struct tm date;
+            //memset(&date, 0, sizeof(struct tm));
+            //strptime( campo[5], "%Y-%m-%d", &date );
+            strcpy( person->birth_date, campo[5] );
+        strcpy( person->gender, campo[6] );
+          strcpy( person->zip, campo[7] );
+        strcpy( person->country_code, campo[8] );
+        strcpy (person->dep, campo[9] );
+        person->is_active = atoi(campo[10]);
+    }
     return (count == 11);// Sucesso se foram lidos 11 campos
 }
 
 // VALIDAR // IMPORTAR
-int import_persons() {
-    LIST_PERSONS list_persons;
-    list_persons.count = 0;   // Nao ha pessoas na lista
+int import_persons(LIST_PERSONS* list_persons) {
+    //LIST_PERSONS list_persons;
+    //list_persons.count = 0;   // Nao ha pessoas na lista
 
     // Importar os dados do ficheiro para a lista de countries
     FILE *fp;         // Ficheiro para importar os dados.
@@ -108,31 +111,57 @@ int import_persons() {
         return 1;
     }
 
-    int pid = 0;
-    while (read_person_from_txt_file(fp, &list_persons.person[list_persons.count])) // Enquanto conseguir ler um registo
+    //int pid = 0;
+    while (read_person_from_txt_file(fp, &list_persons->person[list_persons->count])) // Enquanto conseguir ler um registo
     {
-        pid = list_persons.count;
-        printf("\nLer registo de ficheiro de texto #%d\n", pid);
-        printf("(%d)\n", list_persons.person[pid].id);
-        printf("        Name   : %s\n", list_persons.person[pid].first_name);
-        printf("        L  Name: %s\n", list_persons.person[pid].last_name);
-        printf("        F  Name: %s\n", list_persons.person[pid].full_name);
-        printf("        Address: %s\n", list_persons.person[pid].address);
-        printf("        Email  : %s\n", list_persons.person[pid].email);
-        printf("        Birth  : %s\n", list_persons.person[pid].birth_date);
-        printf("        Gender : %s\n", list_persons.person[pid].gender);
-        printf("        ZIP    : %s\n", list_persons.person[pid].zip);
-        printf("        Country: %s\n", list_persons.person[pid].country_code);
-        printf("        Depart.: %s\n", list_persons.person[pid].dep);
-        printf("        Active : %d\n", list_persons.person[pid].is_active);
-        ++list_persons.count;
+        /*
+        // REMOVER
+        pid = list_persons->count;
+        printf("\nLer registo de ficheiro de texto #%d\n", pid+1);
+        printf("(%d)\n", list_persons->person[pid].id);
+        printf("        Name   : %s\n", list_persons->person[pid].first_name);
+        printf("        L  Name: %s\n", list_persons->person[pid].last_name);
+        printf("        F  Name: %s\n", list_persons->person[pid].full_name);
+        printf("        Address: %s\n", list_persons->person[pid].address);
+        printf("        Email  : %s\n", list_persons->person[pid].email);
+        printf("        Birth  : %s\n", list_persons->person[pid].birth_date);
+        printf("        Gender : %s\n", list_persons->person[pid].gender);
+        printf("        ZIP    : %s\n", list_persons->person[pid].zip);
+        printf("        Country: %s\n", list_persons->person[pid].country_code);
+        printf("        Depart.: %s\n", list_persons->person[pid].dep);
+        printf("        Active : %d\n", list_persons->person[pid].is_active);
+        */
+        ++list_persons->count;
     }
 
     // VALIDAR // REMOVER // PAUSAR PARA VERIFICACAO DOS DADOS APENAS
-    sprintf(info, "\nTotal de registos csv = %d. Prima <ENTER>...\n", pid);
-    wait(info);
+    //sprintf(info, "\nTotal de registos csv = %d.\n", pid);
+    printf("\nTotal de registos csv = %d.\n", list_persons->count);
+    wait("Prima <ENTER> para continuar...\n");
 
     fclose(fp);
+    return(0);
+}
+
+// VALIDAR // Listar Pessoas
+// Exibir resultados de melhor forma
+int show_persons(LIST_PERSONS *list_persons) {
+    for (int i = 0; i < list_persons->count; i++) {
+        printf("(%d)\n", list_persons->person[i].id);
+        printf("        Name   : %s\n", list_persons->person[i].first_name);
+        printf("        L  Name: %s\n", list_persons->person[i].last_name);
+        printf("        F  Name: %s\n", list_persons->person[i].full_name);
+        printf("        Address: %s\n", list_persons->person[i].address);
+        printf("        Email  : %s\n", list_persons->person[i].email);
+        printf("        Birth  : %s\n", list_persons->person[i].birth_date);
+        printf("        Gender : %s\n", list_persons->person[i].gender);
+        printf("        ZIP    : %s\n", list_persons->person[i].zip);
+        printf("        Country: %s\n", list_persons->person[i].country_code);
+        printf("        Depart.: %s\n", list_persons->person[i].dep);
+        printf("        Active : %d\n", list_persons->person[i].is_active);
+    }
+    printf("\nExistem %d pessoas em memoria\n", list_persons->count);
+    wait("Prima <ENTER>...\n");
     return(0);
 }
 
