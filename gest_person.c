@@ -19,6 +19,7 @@ static const char* menu_person[] = {
   "",
   "M - Importar Pessoas",
   "L - Listar pessoas",
+  "G - Guardar pessoas",
   "",
   "1 - Ordenar lista de pessoas",
   "2 - Pesquisar pessoa (pesquisa sequencial)",
@@ -42,10 +43,13 @@ void manage_persons(FILE *fp, LIST_PERSONS* list_persons){
       // VALIDAR // Menu importar dados pessoas csv
       // Menus: a > m
       case OP_IMPORTP:     import_persons(list_persons); break;
-      //case OP_IMPORTP:     import_persons(fp, list_persons); break;
+      case OP_SAVE:        save_persons(fp, list_persons); break;
 
       //case OP_LIST:        wait("Listagens (Pessoas)"); break;
       case OP_LIST:        show_persons(list_persons); break;
+      case OP_SORT:        sort_persons(list_persons); break;
+      /*case OP_SEARCH_SEQ:  show_persons(list_persons); break;
+      case OP_SEARCH_BIN:  show_persons(list_persons); break;*/
 
       case OP_EXIT:        wait("Opcao SAIR"); break;
     }
@@ -89,7 +93,7 @@ int read_person_from_txt_file(FILE *fp, PERSON *person) {
     return (count == 11);// Sucesso se foram lidos 11 campos
 }
 
-// VALIDAR // IMPORTAR
+// VALIDAR // Importar CSV
 int import_persons(LIST_PERSONS* list_persons) {
     //LIST_PERSONS list_persons;
     //list_persons.count = 0;   // Nao ha pessoas na lista
@@ -114,23 +118,6 @@ int import_persons(LIST_PERSONS* list_persons) {
     //int pid = 0;
     while (read_person_from_txt_file(fp, &list_persons->person[list_persons->count])) // Enquanto conseguir ler um registo
     {
-        /*
-        // REMOVER
-        pid = list_persons->count;
-        printf("\nLer registo de ficheiro de texto #%d\n", pid+1);
-        printf("(%d)\n", list_persons->person[pid].id);
-        printf("        Name   : %s\n", list_persons->person[pid].first_name);
-        printf("        L  Name: %s\n", list_persons->person[pid].last_name);
-        printf("        F  Name: %s\n", list_persons->person[pid].full_name);
-        printf("        Address: %s\n", list_persons->person[pid].address);
-        printf("        Email  : %s\n", list_persons->person[pid].email);
-        printf("        Birth  : %s\n", list_persons->person[pid].birth_date);
-        printf("        Gender : %s\n", list_persons->person[pid].gender);
-        printf("        ZIP    : %s\n", list_persons->person[pid].zip);
-        printf("        Country: %s\n", list_persons->person[pid].country_code);
-        printf("        Depart.: %s\n", list_persons->person[pid].dep);
-        printf("        Active : %d\n", list_persons->person[pid].is_active);
-        */
         ++list_persons->count;
     }
 
@@ -143,25 +130,46 @@ int import_persons(LIST_PERSONS* list_persons) {
     return(0);
 }
 
+// VALIDAR // Guardar Ficheiro
+int save_persons(FILE* fp, LIST_PERSONS* list_persons) {
+    int n_recs = fwrite(list_persons->person, sizeof(PERSON), (long) list_persons->count, fp);
+
+    if (n_recs!=list_persons->count)
+    {
+        wait("Problemas na gravacao dos registos no ficheiro binario. Prima <ENTER>...");
+        return;
+    }
+    else
+    {
+        fflush(fp); // just in case
+        fclose(fp);
+        printf("\nTotal de registos gravados com sucesso = %d.\n", n_recs);
+        wait("Prima <ENTER> para continuar...\n");
+    }
+    return(0);
+}
+
 // VALIDAR // Listar Pessoas
 // Exibir resultados de melhor forma
 int show_persons(LIST_PERSONS *list_persons) {
+    printf("LISTA DE PESSOAS\n\n");
+    //printf("A ID  Primeiro Nome\t\tApelido\t\tNome Completo\t\tMorada\t\tEmail\t\tNascimento\t\tGenero\t\tCódigo Postal\t\tPaís\t\tDepartmento\n\n");
+    printf("A ID   Nome\t\tApelido\t\tMorada\t\tNascimento\t\tGenero\t\tCP\t\tPaís\t\tDepartmento\n\n");
     for (int i = 0; i < list_persons->count; i++) {
-        printf("(%d)\n", list_persons->person[i].id);
-        printf("        Name   : %s\n", list_persons->person[i].first_name);
-        printf("        L  Name: %s\n", list_persons->person[i].last_name);
-        printf("        F  Name: %s\n", list_persons->person[i].full_name);
-        printf("        Address: %s\n", list_persons->person[i].address);
-        printf("        Email  : %s\n", list_persons->person[i].email);
-        printf("        Birth  : %s\n", list_persons->person[i].birth_date);
-        printf("        Gender : %s\n", list_persons->person[i].gender);
-        printf("        ZIP    : %s\n", list_persons->person[i].zip);
-        printf("        Country: %s\n", list_persons->person[i].country_code);
-        printf("        Depart.: %s\n", list_persons->person[i].dep);
-        printf("        Active : %d\n", list_persons->person[i].is_active);
+        //show_person_vertical(&list_persons->person[i]);
+        show_person_horizontal(&list_persons->person[i]);
+        //printf("\n");
     }
     printf("\nExistem %d pessoas em memoria\n", list_persons->count);
     wait("Prima <ENTER>...\n");
+    return(0);
+}
+
+// VALIDAR // Ordenar Lista
+int sort_persons(LIST_PERSONS* list_persons) {
+    wait("\n\nOrdenar lista de pessoas pelo nome do pais. Prima <ENTER>...");
+    qsort(list_persons->person, (long) list_persons->count, sizeof(PERSON), comp);
+    wait("Prima <ENTER> para continuar...\n");
     return(0);
 }
 
@@ -205,3 +213,11 @@ int save_person(FILE *fp, LIST_PERSONS *list_persons, PERSON *p, char operation)
   return 1;
 }
 
+// VALIDAR // Comparar Nomes
+int comp(const void*ptr1, const void* ptr2) {
+  PERSON *p1 = (PERSON *) ptr1;
+  PERSON *p2 = (PERSON *) ptr2;
+
+  // comparar primeiro nome
+  return strcmp(p1->first_name, p2->first_name);
+}

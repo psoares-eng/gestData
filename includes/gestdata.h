@@ -25,7 +25,9 @@
 #define OP_REMOVE   'r'
 #define OP_UNDELETE 'u'
 
+// VALIDAR
 #define OP_IMPORTP   'm'
+#define OP_SAVE      'g'
 
 #define OP_LIST     'l'
 #define OP_SORT     '1'

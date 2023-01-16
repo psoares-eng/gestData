@@ -124,11 +124,11 @@ int confirm(const char*prompt) {
 // https://stackoverflow.com/questions/33704362/spilitting-a-string-into-array-of-strings?noredirect=1&lq=1
 void tokenize(char* string, char *delimiter, char *arr[], int* count) {
     char *token;
-    token = strtok (string, delimiter);
+    token = strtok(string, delimiter);
     int i = 0;
     while (token != NULL) {
         arr[i++] = token;
-        token = strtok (NULL, delimiter);
+        token = strtok(NULL, delimiter);
     }
     *count = i;
 }

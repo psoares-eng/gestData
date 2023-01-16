@@ -13,5 +13,7 @@ void remove_person(FILE *fp, LIST_PERSONS *list_persons);
 
 int save_person(FILE *fp, LIST_PERSONS *list_persons, PERSON *p, char operation);
 
+int comp(const void*ptr1, const void* ptr2);
+
 #endif // __GEST_PERSON__
 
