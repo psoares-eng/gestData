@@ -26,6 +26,10 @@ DATE read_date(const char* prompt);
 char get_menu_option(const char *menu[]);
 int confirm(const char*prompt);
 
+// VALIDAR
+void tokenize(char* string, char *delimiter, char *arr[], int* count);
+char *strreplace(char *s, const char *s1, const char *s2);
+
 #endif // __UTILS_H__
 
 

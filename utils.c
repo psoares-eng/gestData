@@ -122,6 +122,7 @@ int confirm(const char*prompt) {
 // VALIDAR // Divide uma string em várias por um separador
 // Recolhe sub-strings em array
 // https://stackoverflow.com/questions/33704362/spilitting-a-string-into-array-of-strings?noredirect=1&lq=1
+// https://www.tutorialspoint.com/what-is-strtok-r-function-in-c-language
 void tokenize(char* string, char *delimiter, char *arr[], int* count) {
     char *token;
     token = strtok(string, delimiter);
