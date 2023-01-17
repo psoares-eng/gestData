@@ -8,6 +8,7 @@
 
 // Dimensao das strings de uso generico
 #define MAX_STRING             1024
+#define MAX_LINE               2048
 
 // Opcoes dos menus
 // Main menu

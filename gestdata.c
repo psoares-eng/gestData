@@ -25,7 +25,7 @@ static const char *menu_main[] = {
 FILE *open_data_file(const char *folder, const char*filename) {
   FILE *fp;
   char fullpath[MAX_STRING];
-  char erro[MAX_STRING];
+  char erro[MAX_STRING+MAX_STRING];
   sprintf(fullpath, "%s/%s", folder, filename); // Criar o caminho completo do ficheiro
 
   if (!file_exists(fullpath)) // Ficheiro de dados nao existe. Vamos criar!!!
