@@ -39,10 +39,10 @@ void show_person_vertical(PERSON *p){
 // Exibe Horizontal pessoa o registo de uma pessoa a partir do ecra
 void show_person_horizontal(PERSON *p){
     // VALIDAR // TODO // Exibe Horizontal pessoa o registo de uma pessoa a partir do ecra
-    // "Activo ID  Primeiro Nome\t\tApelido\t\tNome Completo\t\tMorada\t\tEmail\t\tNascimento\t\tGenero\t\tCódigo Postal\t\tPaís\t\tDepartmento\n\n"
-    //printf("%d %d  %s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n",
-    printf("%d %d  %s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n",
+    //printf("A ID  Nome            APELIDO              Morada                     Nasc.     Genero CP     Departmento    \n\n");
+    //printf("%1d %3d %10s %10s %20s %20s %20s %9s %6s %6s %2s %10s\n",
+    printf("%1d %3d %15s %20s %25s %9s %6s %6s %15s\n",
            p->is_active, p->id, p->first_name, p->last_name,
-           /*p->full_name, */p->address, /*p->email, */p->birth_date,
-           p->gender, p->zip, p->country_code, p->dep);
+           /*p->full_name,  */p->address, /*p->email, */p->birth_date,
+           p->gender, p->zip, /*p->country_code, */p->dep);
 }
