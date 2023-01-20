@@ -58,7 +58,7 @@ int read_integer(const char*prompt, int min, int max){
 
 // Le uma string com um tamanho minimo e maximo
 char* read_string(const char*prompt, char*s, int min_len, int max_len){
-    // VALIDAR // TODO // Le uma string com dimensao minima
+    // TODO // Le uma string com dimensao minima
     do {
         fflush(stdin);
         printf("%s", prompt);

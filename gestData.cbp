@@ -55,6 +55,9 @@
 		<Unit filename="person.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="strsep.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="utils.c">
 			<Option compilerVar="CC" />
 		</Unit>

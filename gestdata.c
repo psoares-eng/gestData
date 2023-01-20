@@ -7,10 +7,10 @@
 #include "includes/menus.h"
 
 static const char *menu_main[] = {
-                      "A - Gestao de pessoas",
-                      "B - Gestao de paises",
+                      "P - Gestao de pessoas",
+                      "N - Gestao de paises",
                       "",
-                      "I - Importar dados",
+                      "C - Importar dados - .CSV",
                       "",
                       "D - \"Dump\"   - Reescrever todos os dados",
                       "Z - \"Zap\"    - Compactar dados (remover apagados)",
@@ -53,7 +53,7 @@ int main() {
   int opcao;
   FILE *fp_data;
   LIST_PERSONS list_persons;
-  list_persons.count = 0;   // Nao ha pessoas na lista
+  list_persons_inic(&list_persons); // Nao ha pessoas na lista
 
   setlocale(LC_ALL,"");
 
@@ -64,27 +64,18 @@ int main() {
   {
     switch(opcao)
     {
-/*
-OP_PERSONS   'a'
-OP_COUNTRIES 'b'
-OP_IMPORT    'i'
-OP_DUMP      'd'
-OP_ZAP       'z'
-OP_RESET     'r'
-OP_EXIT      'x'
-*/
-      case OP_PERSONS:    manage_persons(fp_data, &list_persons); break;
-      case OP_COUNTRIES:  manage_countries(); break;
 
       // TODO // MENU (1 NIVEL)
       // VALIDAR
-      // TERMINADO
+      case OP_PERSONS:    manage_persons(fp_data, &list_persons); break;
+      case OP_COUNTRIES:  manage_countries(); break;
 
-      /*
-      case OP_IMPORT:    manage_persons(fp_data, &list_persons); break;
-      case OP_DUMP:  manage_countries(); break;
-      case OP_ZAP:    manage_persons(fp_data, &list_persons); break;
-      case OP_RESET:  manage_countries(); break;*/
+      case OP_IMPORT:     import_persons(&list_persons); break;
+
+      case OP_DUMP:       save_persons(fp_data, &list_persons); break;
+      //case OP_ZAP:    manage_persons(fp_data, &list_persons); break;
+
+      case OP_RESET:      reset_file(fp_data); break;
 
       case OP_EXIT:       wait("Opcao SAIR"); break;
     }

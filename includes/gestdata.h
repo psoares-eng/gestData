@@ -12,30 +12,32 @@
 
 // Opcoes dos menus
 // Main menu
-#define OP_PERSONS   'a'
-#define OP_COUNTRIES 'b'
-#define OP_IMPORT    'i'
+#define OP_PERSONS   'p'
+#define OP_COUNTRIES 'n'
+
+#define OP_IMPORT    'c'
 #define OP_DUMP      'd'
 #define OP_ZAP       'z'
+
 #define OP_RESET     'r'
+
 #define OP_EXIT      'x'
 
 // Menu pessoas
 #define OP_INSERT   'i'
-#define OP_UPDATE   'a'
+#define OP_UPDATE   'm'
 #define OP_REMOVE   'r'
 #define OP_UNDELETE 'u'
 
 // VALIDAR
-#define OP_IMPORTP   'm'
-#define OP_SAVE      'g'
+#define OP_LIST      'l'
+#define OP_LIST_ALL  't'
+//#define OP_SAVE      'g'
+#define OP_CLEANLIST 'e'
 
-#define OP_LIST     'l'
-#define OP_SORT     '1'
-#define OP_SEARCH_SEQ '2'
-#define OP_SEARCH_BIN '3'
-
-
+#define OP_SORT         '1'
+#define OP_SEARCH_SEQ   '2'
+#define OP_SEARCH_BIN   '3'
 
 
 void reset(FILE *fp);

@@ -5,7 +5,7 @@
 
 // VALIDAR
 #define MAX_NAME_SIZE           50
-    #define MAX_FULLNAME_SIZE  100
+    #define MAX_FULLNAME_SIZE  101
 #define MAX_ADDRESS_SIZE       100
 #define MAX_EMAIL_SIZE          50
     #define MAX_BIRTH_DATE      10
@@ -23,10 +23,13 @@ typedef struct
     int id;
     char first_name[MAX_NAME_SIZE+1];
     char last_name[MAX_NAME_SIZE+1];
-      char full_name[MAX_FULLNAME_SIZE+1];
+      char full_name[MAX_FULLNAME_SIZE+2];
     char address[MAX_ADDRESS_SIZE+1];
     char email[MAX_EMAIL_SIZE+1];
+
       char birth_date[MAX_BIRTH_DATE+1];
+      //DATE birth_date;
+
     char gender[MAX_GENDER_SIZE+1];
       char zip[MAX_ZIP+1];
     char country_code[MAX_COUNTRY_CODE_SIZE+1];
@@ -36,7 +39,7 @@ typedef struct
 } PERSON;
 
 
-void read_person(PERSON *p, char operation);
+void read_person(PERSON *p, char opcao);
 void show_person_vertical(PERSON *p);
 void show_person_horizontal(PERSON *p);
 #endif // __PERSON_H__

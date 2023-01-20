@@ -12,6 +12,7 @@
 
 typedef struct {
   int year, month, day;
+  //char str[10+1];
 } DATE;
 
 void cls();
@@ -19,7 +20,7 @@ void wait(const char*caption);
 
 int file_exists(const char*filename);
 int read_integer(const char*prompt, int min, int max);
-char* read_string(const char*prompt, char*s, int min_len);
+char* read_string(const char*prompt, char*s, int min_len, int max_len);
 
 DATE read_date(const char* prompt);
 
@@ -27,8 +28,8 @@ char get_menu_option(const char *menu[]);
 int confirm(const char*prompt);
 
 // VALIDAR
-void tokenize(char* string, char *delimiter, char *arr[], int* count);
-char *strreplace(char *s, const char *s1, const char *s2);
+int tokenize(char* string, char *delimiter, char *arr[]);//, int* count
+//char *strreplace(char *s, const char *s1, const char *s2);
 
 #endif // __UTILS_H__
 
